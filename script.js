@@ -1,16 +1,17 @@
-    $(document).ready(function () {// tells engine to load 1)html & 2)css first.
-    //display current day & time.
-    $("#currentDay").text(moment().format("MMMM Do YYYY, h:mm:ss a")); // use of moment.js
-    //assign saveBtn click listener for user input and time stamp??
+    // tells computer to run HTML & CSS 1st.
+    $(document).ready(function () {
+    //displays the current day & time using moment js
+    $("#currentDay").text(moment().format("MMMM Do YYYY, h:mm:ss a"));
+    //assign saveBtn on click function.
     $(".saveBtn").on("click", function () {
-        //get nearby values.
+        //gets the nearby value.
         console.log(this);
         var text = $(this).siblings(".description").val(); // taken the change from the sibling html description attribute
         var time = $(this).parent().attr("id"); // taken the change from the parent html id attribute
-        //set items in local storage.
+        //sets the items to/in local storage.
         localStorage.setItem(time, text);
     })
-    //load any saved data from LocalStorage - do this for each hour created. Should follow html 24 hour to 12 hour conversion.
+    //loads the saved data from the various time block divs
     $("#hour6 .description").val(localStorage.getItem("hour6"))
     $("#hour7 .description").val(localStorage.getItem("hour7"))
     $("#hour8 .description").val(localStorage.getItem("hour8"));
@@ -25,14 +26,14 @@
     $("#hour17 .description").val(localStorage.getItem("hour17"));
 
     function loadHours() {
-            //get current number of hours.
-             var currentHour = moment().hour(); // use of moment.js
+            //gets current hour using moment js 
+             var currentHour = moment().hour();
              // loop over time blocks
              $(".time-block").each(function () {
             var blockHour = parseInt($(this).attr("id").split("hour")[1]);
             console.log(this)
 
-            //check if we've moved past this time, click into css/html given classes of past, present, or future
+            // checks to see if the block hour is greater then the current hour if so changes colors
             if (blockHour < currentHour) {
                 $(this).addClass("past");
                 $(this).removeClass("future");
@@ -50,6 +51,6 @@
             }
         })
     }
-    // start function
+    // Calls the function
     loadHours(); 
 })
